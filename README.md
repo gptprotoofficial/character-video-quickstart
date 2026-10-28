@@ -1,6 +1,22 @@
 # character-video-quickstart
 
-Turn a SillyTavern character card into a short video clip with one command.
+Turn a SillyTavern character card into a short video clip with one command — and rebuild a 30-second AI ad from 12 open prompts. One API, any video model.
+
+![30-second soda ad — six generated clips](docs/preview.gif)
+
+**▶ Watch the full 30-second film on TikTok:**
+https://www.tiktok.com/@bestgptproto/video/7701614456182164767
+
+The moving preview above is cut from that film. Every prompt behind it — 6
+text-to-image keyframes, 6 image-to-video clips, the timeline variant and the
+VO script — lives in
+**[`prompts/ad_30s_gptproto.md`](prompts/ad_30s_gptproto.md)**, with the
+reference stills in [`prompts/assets/`](prompts/assets/). Clone it, add your
+key, make your own version.
+
+---
+
+*Everything below documents the character-card tooling.*
 
 Reads a character card (PNG or JSON), takes the card image as the reference frame,
 builds a motion prompt from the card fields, submits a reference-to-video task to
@@ -168,8 +184,8 @@ Anything works as hosting: your own S3 bucket, a CDN, GitHub raw, or the
 - `run` therefore does **not** auto-retry a failed task. It retries only
   transport-level errors (timeout, 429, 5xx) with exponential backoff and jitter.
 
-- A 5-second 720p clip is about $0.79 (≈$0.157 per second of output); 1080p runs
-  ≈$0.235 per second. Check the model page before a batch run - prices move.
+- Billing is per second of generated video and varies by model and resolution.
+  Check the model page for the current rate before a batch run - prices move.
 - Billable durations follow the tiers listed on the model page (3 / 5 / 10 / 30 s
   for 720p). `--duration` is passed through as-is, so stick to a listed tier.
 - Batch tip: run `dry-run` on the whole folder first, then generate one clip
