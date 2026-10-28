@@ -184,7 +184,31 @@ character_video/
   gptproto.py  create task, poll, download, tolerant response parsing
   retry.py     backoff + jitter, transport errors only
   cli.py       cards / dry-run / selftest / run
+prompts/
+  ad_30s_gptproto.md   30s soda ad reproduction pack (12 prompts + timeline)
+  assets/              the six reference keyframes, in ad order
 ```
+
+## Make this ad yourself
+
+We turned 12 prompts into a 30-second soda commercial (a fictional brand — gptproto cola does not exist). Every prompt is in the repo:
+
+- **Prompts:** [`prompts/ad_30s_gptproto.md`](prompts/ad_30s_gptproto.md) — 6 text-to-image keyframe prompts, 6 image-to-video clip prompts, a single-generation 30s timeline variant, the VO script, and consistency locks
+- **Reference keyframes:** [`prompts/assets/`](prompts/assets/) — the six stills this pack reproduces, in ad order
+
+Three steps:
+
+1. **Verify your key** (free):
+
+```bash
+python -m character_video selftest
+```
+
+2. **Generate the six clips** — send the 6 keyframe prompts to a text-to-image model, then animate each still with a seedance image-to-video call (`doubao-seedance-2-0-260128`, 9:16, 5s, 720p). The exact cURL calls are at the bottom of the prompt pack.
+
+3. **Stitch** — concat the six 5s clips with ffmpeg (command included in the pack), add the VO script and SFX markers, grade with one LUT.
+
+Consistency rules (same bottle, same grade, same characters across all six shots) are written into every prompt — copy them verbatim or the six clips will not cut together as one film.
 
 ## Roadmap
 
